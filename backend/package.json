@@ -4,8 +4,8 @@
   "description": "iNotebook - Your notebook on the cloud",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index",
-    "start": "nodemon index"
+    "test": "nodemon",
+    "start": "nodemon"
   },
   "author": "",
   "license": "ISC",
