@@ -111,7 +111,7 @@ router.post(
     }
 );
 
-//ROUTE 2: Get loggedin User Details using: POST "/api/auth/getuser". login required
+//ROUTE 3: Get loggedin User Details using: POST "/api/auth/getuser". login required
 router.post("/getuser", fetchuser, async (req, res) => {
         try {
             userId = req.user.id;
