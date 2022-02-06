@@ -48,21 +48,23 @@ const AddNote = () => {
                             onChange={onChange}
                         />
                     </div>
-                    <div className="mb-3 form-check">
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="exampleCheck1"
-                        />
+                    <div className="mb-3">
                         <label
-                            className="form-check-label"
-                            htmlFor="exampleCheck1"
+                            htmlFor="tag"
+                            className="form-label"
                         >
-                            Check me out
+                            Tag
                         </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="tag"
+                            name="tag"
+                            onChange={onChange}
+                        />
                     </div>
                     <button type="submit" className="btn btn-primary" onClick={handleClick}>
-                        Submit
+                        Add Note
                     </button>
                 </form>
             </div>
