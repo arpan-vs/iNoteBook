@@ -66,10 +66,12 @@ router.post(
         body("password", "Password cannot be blank").exists(),
     ],
     async (req, res) => {
+        let success = false;
         // If there are errors, return the Bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({
+                success, errors: errors.array() });
         }
 
         const { email, password } = req.body;
@@ -79,6 +81,7 @@ router.post(
                 return res
                     .status(400)
                     .json({
+                        success,
                         error: "Please try to login with correct credentials",
                     });
             }
@@ -90,7 +93,7 @@ router.post(
             if (!passwordCompare) {
                 return res
                     .status(400)
-                    .json({
+                    .json({ success,
                         error: "Please try to login with correct credentials",
                     });
             }
@@ -101,8 +104,8 @@ router.post(
                 },
             };
             const authToken = jwt.sign(data, JWT_SECRET);
-
-            res.json({ authToken });
+            success = true;
+            res.json({ success,authToken });
         } catch (error) {
             // catch a error
             console.error(error.message);
