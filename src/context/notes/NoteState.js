@@ -40,17 +40,8 @@ const NoteState = (props) => {
                 body: JSON.stringify({ title, description, tag }),
             }
         );
-        const json = await respose.json();
-        // console.log(json)
-        const note = {
-            _id: "61fcac2ca7sc9e88sb2df033af",
-            user: "61fc04e11b1478fcd9287ab2",
-            title: title,
-            description: description,
-            tag: tag,
-            date: "2022-02-04T04:31:40.546Z",
-            __v: 0,
-        };
+        const note = await respose.json();
+        
         setNotes(notes.concat(note));
     };
 
@@ -66,8 +57,8 @@ const NoteState = (props) => {
             },
         });
         const json = respose.json();
-        console.log(json)
-        console.log("Deleteing the note " + id);
+        // console.log(json)
+        // console.log("Deleteing the note " + id);
         const newNotes = notes.filter((note) => {
             return note._id !== id;
         });
@@ -78,7 +69,7 @@ const NoteState = (props) => {
     const editNote = async (id, title, description, tag) => {
         // TODO: API call
         const respose = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "auth-token":
@@ -86,17 +77,21 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({title,description,tag}),
         });
-        const json = respose.json();
+        const json = await respose.json();
+        // console.log(json);
 
+        let newNotes = JSON.parse(JSON.stringify(notes))
         // Logic to edit in client
-        for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
+        for (let index = 0; index < newNotes.length; index++) {
+            const element = newNotes[index];
             if (element._id === id) {
-                element.title = title;
-                element.description = description;
-                element.tag = tag;
+                newNotes[index].title = title;
+                newNotes[index].description = description;
+                newNotes[index].tag = tag;
+                break;
             }
         }
+        setNotes(newNotes);
     };
     return (
         <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>

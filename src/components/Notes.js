@@ -5,21 +5,25 @@ import Noteitem from "./Noteitem";
 
 const Notes = () => {
     const context = useContext(noteContext);
-    const { notes, getNotes } = context;
+    const { notes, getNotes, editNote } = context;
     useEffect(() => {
         getNotes();
-    }, []);
+    },[]);
     const ref = useRef(null);
+    const refClose = useRef(null);
+    const [note, setNote] = useState({id:"", etitle:"", edescription:"", etag:""});
+ 
     const updateNote = (currentNote) => {
         ref.current.click();
-        setNote({etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag})
+        setNote({id:currentNote._id,etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag})
     };
 
-    const [note, setNote] = useState({etitle:"", edescription:"", etag:""});
 
     const handleClick = (e) =>{
-        console.log("updating the note",note)
-        e.preventDefault();
+        // console.log("updating the note",note);
+        editNote(note.id,note.etitle,note.edescription,note.etag);
+        refClose.current.click();
+        // e.preventDefault();
         // addNote(note.title,note.description,note.tag);
     }
     const onChange = (e) => {
@@ -75,6 +79,7 @@ const Notes = () => {
                                         aria-describedby="emailHelp"
                                         value={note.etitle}
                                         onChange={onChange}
+                                        minLength={3} required
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -91,6 +96,7 @@ const Notes = () => {
                                         name="edescription"
                                         value={note.edescription}
                                         onChange={onChange}
+                                        minLength={5} required
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -113,10 +119,11 @@ const Notes = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
+                                ref={refClose}
                             >
                                 Close
                             </button>
-                            <button type="button" className="btn btn-primary" onClick={handleClick}>
+                            <button disabled={note.etitle.length<3 || note.edescription.length<5} type="button" className="btn btn-primary" onClick={handleClick}>
                                 Update Note
                             </button>
                         </div>
@@ -125,6 +132,9 @@ const Notes = () => {
             </div>
             <div className="row my-3">
                 <h2>Your Note</h2>
+                <div className="container">
+                    {notes.length === 0 && 'No notes to Display'}
+                </div>
                 {notes.map((note) => {
                     return (
                         <Noteitem
