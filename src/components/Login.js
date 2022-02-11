@@ -21,9 +21,10 @@ const Login = (props) => {
             // save the auth-token and redirect
             localStorage.setItem('token',json.authtoken)
             nevigate("/");
+            props.showAlert("Logged in Successfully!","success");
         }
         else{
-            alert("Invalid Alert");
+            props.showAlert("Invald Details","danger");
         }
     }
 
