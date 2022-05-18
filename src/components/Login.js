@@ -19,12 +19,12 @@ const Login = (props) => {
         console.log(json);
         if(json.success){
             // save the auth-token and redirect
-            localStorage.setItem('token',json.authtoken)
-            nevigate("/");
+            localStorage.setItem('token',json.authToken);
             props.showAlert("Logged in Successfully!","success");
+            nevigate("/");
         }
         else{
-            props.showAlert("Invald Details","danger");
+            props.showAlert("Invalid Details","danger");
         }
     }
 
@@ -33,7 +33,8 @@ const Login = (props) => {
     }
 
     return (
-        <div className="container">
+        <div className="container mt-3">
+            <h2>Login to continue to iNoteBook</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">
