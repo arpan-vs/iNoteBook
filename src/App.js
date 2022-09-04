@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -23,7 +23,7 @@ function App() {
     return (
         <>
             <NoteState>
-                <Router>
+                {/* <Router> */}
                     <NavBar />
                     <Alert alert={alert} />
                     <div className="container">
@@ -34,7 +34,7 @@ function App() {
                             <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
                         </Routes>
                     </div>
-                </Router>
+                {/* </Router> */}
             </NoteState>
         </>
     );
